@@ -56,7 +56,7 @@ Crear un servicio Python mínimo llamado API, ubicado en `services/api/`, con un
 - Rama de trabajo: `feature/api-service`
 
 ## Responsable(s)
-Bianca Merchan Torres
+Bianca Merchán Torres
 
 ## Resultado (Implementación)
 
@@ -120,6 +120,43 @@ bianca007@MSI:/mnt/c/Users/Bianca/Documents/PC4-Proyecto2-Dependency-Exposure-Ra
 En la pagina http://localhost:8080/ se tiene:
 
 {"message":"Dependency Exposure Radar - API running"}
+
+
+
+# Issue 3 — Implementar servicio Worker
+## ID=3
+
+## Descripción corta
+
+Crear el servicio Worker, ubicado en services/worker/, que ejecute una función simple (por ejemplo, procesar un mensaje o imprimir) y contar con su propio requirements.txt (vacío o mínimo).
+
+## Criterios de aceptación
+
+El Worker ejecuta sin errores.
+
+app.py contiene una función simple (procesar mensaje / print).
+
+El servicio se puede ejecutar con:
+
+python app.py
+
+requirements.txt creado (vacío o con dependencias mínimas).
+
+Ubicación correcta:
+
+services/worker/app.py
+
+services/worker/requirements.txt
+
+Rama de trabajo: feature/worker-service
+
+## Responsable(s)
+
+Bianca Merchán Torres
+
+## Ejecución
+bianca007@MSI:/mnt/c/Users/Bianca/Documents/PC4-Proyecto2-Dependency-Exposure-Radar/services/worker$ python3 app.py [worker] Iniciando Worker... [worker] Procesando mensaje: Hola desde Worker [worker] Trabajo finalizado.
+
 
 
 
