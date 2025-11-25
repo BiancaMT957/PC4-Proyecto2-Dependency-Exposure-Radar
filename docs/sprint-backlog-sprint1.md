@@ -193,3 +193,105 @@ Bianca Merchán Torres
 [reporter] Iniciando Reporter...
 [reporter] Servicio listo para leer reportes o SBOMs.
 ```
+
+# Issue 5 - Crear Dockerfiles multi-stage para cada servicio
+## ID=5
+## Descripcion
+Crear Dockerfiles para api, worker y reporter usando imágenes slim o alpine y multi-stage build.
+
+## Criterios de aceptacion
+- No usar `:latest`: Cuando hacemos
+  ```bash
+  FROM python:latest # Solicita la version más reciente y estable de Python (no es fijo)
+  ```
+  No garantiza reproducibilidad, que es lo que buscamos.
+  Solucion:
+  ```bash
+  FROM python:3.12-slim-bookworm # Version fija
+  ```
+  Aqui tambien cumplimos el uso de imagenes `slim` o alpine:
+    - `slim`: variante reducida de Debian (menos paquetes, menos peso).
+    - `bookworm`: nombre de la version de Debian base.
+
+  Tambien podriamos usar `python:3.12-alpine`, pero con `slim` ya cubrimos los requerimientos necesarios.
+
+- `USER no-root`: Por defecto, los contenedores corren como root, lo cual es un riesgo:
+  - compromete el host si alguien escapa del contenedor
+  - viola prácticas DevSecOps
+  - muchas auditorías lo rechazan
+
+  Solucion:
+  ```bash
+  RUN useradd -m appuser && chown -R appuser /app
+  USER appuser
+  ```
+- `.dockerignore` correcto: evita que Docker copie basura al contexto cuando se hace
+  ```nginx
+  docker build .
+  ```
+- Multi-stage funcionando: Se compone de 2 stages (builder y runtime).
+  ```dockerfile
+  # Instala dependencias
+  FROM python:3.12-slim-bookworm AS builder
+  # Copia lo necesario para la ejecucion
+  FROM python:3.12-slim-bookworm AS runtime
+  ```
+
+## Responsable
+Luis Calapuja
+
+## Implementacion
+```dockerfile
+# Stage 1: builder
+# Carpeta de trabajo
+WORKDIR /app
+# Crea entorno virtual en el contenedor
+RUN python -m venv /opt/venv
+# Añade PATH para usar pip del venv
+ENV PATH="/opt/venv/bin:${PATH}"
+# Copia requirements e instala dependencias
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+# Copia el codigo del servicio
+COPY . .
+```
+
+```dockerfile
+# Stage 2: runtime
+# Config el entorno de ejecucion (sin .pyc ni buffer)
+ENV PATH="/opt/venv/bin:${PATH}"
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+# Copia venv instalado y codigo
+COPY --from=builder /opt/venv /opt/venv
+COPY --from=builder /app /app
+# Crea usuario no-root
+RUN useradd -m appuser && chown -R appuser /app
+USER appuser
+# Ejecuta el servicio
+CMD ["python", "app.py"]
+```
+
+## Ejecucion
+Desde la ubicacion de cada archivo dockerfile haremos lo siguiente:
+```bash
+# API Flask
+cd services/api
+docker build -t auditor-api:0.1 .
+docker run -p 8080:8080 auditor-api:0.1
+```
+Se verifica en el navegador: `http://localhost:8080/`
+
+```bash
+# worker
+cd services/worker
+docker build -t auditor-worker:0.1 .
+docker run auditor-worker:0.1
+```
+```bash
+# reporter
+cd services/reporter
+docker build -t auditor-reporter:0.1 .
+docker run auditor-reporter:0.1
+
+```
