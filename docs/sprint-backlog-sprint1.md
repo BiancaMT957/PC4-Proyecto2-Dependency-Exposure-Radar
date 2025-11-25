@@ -155,16 +155,41 @@ Rama de trabajo: feature/worker-service
 Bianca Merchán Torres
 
 ## Ejecución
+
 bianca007@MSI:/mnt/c/Users/Bianca/Documents/PC4-Proyecto2-Dependency-Exposure-Radar/services/worker$ python3 app.py [worker] Iniciando Worker... [worker] Procesando mensaje: Hola desde Worker [worker] Trabajo finalizado.
 
 
+# Issue 4 — Implementar servicio Reporter
+## ID=4
+## Descripción corta
+
+Crear el servicio Reporter, ubicado en services/reporter/, que ejecuta una función mínima para indicar que el sistema está listo para leer reportes o SBOMs. Incluir un requirements.txt liviano (vacío en este caso).
+
+## Criterios de aceptación
+
+app.py ejecuta sin errores.
+
+Contiene una función simple o impresión placeholder.
+
+requirements.txt creado y mínimo (puede estar vacío).
+
+Ubicación correcta del servicio:
+
+services/reporter/app.py
+
+services/reporter/requirements.txt
 
 
+## Responsable(s)
+
+Bianca Merchán Torres
 
 
+## Ejecución
 
 
-
-
-
-
+```
+(venv) bianca007@MSI:/mnt/c/Users/Bianca/Documents/PC4-Proyecto2-Dependency-Exposure-Radar/services/reporter$ python3 app.py
+[reporter] Iniciando Reporter...
+[reporter] Servicio listo para leer reportes o SBOMs.
+```
