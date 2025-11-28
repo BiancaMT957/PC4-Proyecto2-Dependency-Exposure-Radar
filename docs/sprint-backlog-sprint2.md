@@ -83,10 +83,11 @@ Servicio: api
 Servicios encontrados: 1
 SBOMs válidos: 1
 ✔ Todo OK
-
+```
 
 Contenido generado en sboms/api.json:
 
+```
 {
   "sbom_format": "simulado",
   "name": "api",
@@ -99,5 +100,87 @@ Contenido generado en sboms/api.json:
     { "path": "requirements.txt", "size": 14 }
   ]
 }
+```
 
 De la misma manera hay salidas  para reporter.json y worker.json
+
+
+#  Issue 8 — Script `run-scan.sh` (SCA simulado o real)
+
+**ID:** 8  
+**Responsable:** Bianca Merchán Torres  
+**Rama de trabajo:** `feature/run-scan/Bianca`
+
+---
+
+##  Descripción corta
+
+Crear un script `run-scan.sh` dentro de la carpeta `scripts/` que ejecute un análisis SCA (real o simulado) sobre las dependencias del proyecto y genere un archivo JSON con los resultados.
+
+El análisis debe:
+
+- Guardar el resultado en `reports/`
+- Ejecutarse sin errores en cualquier entorno
+- Usar herramientas reales (como **grype**) si están instaladas
+- Si no, generar un análisis **simulado**
+
+---
+
+##  Criterios de aceptación
+
+- El script genera un archivo **JSON válido** dentro de `reports/`.
+- La ejecución no produce errores.
+- El análisis puede ser:
+  - **Real:** si existe una herramienta instalada (p. ej., `grype`)
+  - **Simulado:** si no se encuentra ninguna herramienta disponible
+- Nombre del archivo generado: ´reports/scan-report.json
+
+
+- El script debe imprimir **logs simples**, como:
+- inicio
+- tipo de análisis
+- resultado final
+
+---
+
+##  Ubicación esperada: 
+scripts/run-scan.sh
+reports/scan-report.json
+
+
+---
+
+##  Ejecución esperada
+
+**Comando:**
+
+```bash
+./scripts/run-scan.sh
+```
+
+## Salida esperada (ejemplo):
+
+```
+(venv) bianca007@MSI:/mnt/c/Users/Bianca/Documents/PC4-Proyecto2-Dependency-Exposure-Radar/scripts$ ./run-scan.sh
+Iniciando análisis SCA...
+No se encontró herramienta real, usando análisis simulado.
+✓ Análisis simulado generado.
+Reporte generado en: /mnt/c/Users/Bianca/Documents/PC4-Proyecto2-Dependency-Exposure-Radar/repReporte generado en: /mnt/c/Users/Bianca/Documents/PC4-Proyecto2-Dependency-Exposure-Radar/reports/scan-report.json
+✔ Análisis completado sin errores.
+```
+
+Además dentro de la carpeta reports/
+
+```
+{
+  "scan_type": "simulado",
+  "generated_at": "2025-11-28T10:16:09Z",
+  "vulnerabilities": [
+    { "id": "SIM-001", "severity": "LOW", "package": "example-lib" },
+    { "id": "SIM-002", "severity": "MEDIUM", "package": "otra-dependencia" }
+  ]
+}
+```
+
+
+
