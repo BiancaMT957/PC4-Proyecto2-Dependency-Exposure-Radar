@@ -182,5 +182,28 @@ Además dentro de la carpeta reports/
 }
 ```
 
+# Issue 9 - Implementar analyze_sboms.py
+**ID:** 8 9
+**Responsable:** Luis Calapuja
+**Rama de trabajo:** `feature/analyze-sboms/luis`
 
+## Descripcion
+Programa que analiza todos los SBOMs y genera `report.json`.
 
+## Criterios de aceptacion
+- Detecta dependencias repetidas
+- Genera JSON final
+- No importa si SBOM es simulado
+
+## Implementacion
+- Lee todos los SBOMs de la carpeta `sboms/`
+- No importa si son reales o simulados (solo asume formato JSON válido)
+- Junta todas las vulnerabilidades o dependencias
+- Detecta paquetes repetidos entre servicios
+- Crea un `reports/report.json` final consolidado
+
+## Ejecucion
+Luego de ejecutar el `generate-sboms.sh` procederemos a analizarlos con:
+```bash
+python3 scripts/analyze-sboms.py
+```

@@ -26,3 +26,22 @@
 ![captura](issue5.2.png)
 
 ![captura](issue5.3.png)
+
+## Issue 6
+![captura](issue6.1.png)
+
+![captura](issue6.2.png)
+
+## Issue 7
+![captura](issue7.png)
+
+![captura](issue7.1.png)
+
+![captura](issue7.2.png)
+
+![captura](issue7.3.png)
+
+## Issue 7
+![captura](issue8.png)
+
+![captura](issue8.1.png)
