@@ -69,7 +69,7 @@ def main():
     sboms = load_sboms(SBOMS_DIR)
 
     if not sboms:
-        print("⚠ No se encontraron SBOMs. Finalizando.")
+        print("No se encontraron SBOMs. Finalizando.")
         return
 
     result = analyze(sboms)
@@ -78,7 +78,7 @@ def main():
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
 
-    print(f"✔ Análisis completado. Reporte generado en: {output_file}")
+    print(f"Análisis completado. Reporte generado en: {output_file}")
 
 
 if __name__ == "__main__":
