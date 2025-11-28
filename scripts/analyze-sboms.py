@@ -12,7 +12,7 @@ def load_sboms(sbom_dir: Path):
                 data = json.load(f)
                 sboms.append({"file": file.name, "data": data})
         except json.JSONDecodeError:
-            print(f"⚠ Error: {file} no es JSON válido. Se ignora.")
+            print(f"Error: {file} no es JSON válido. Se ignora.")
     return sboms
 
 
@@ -65,11 +65,11 @@ def main():
     REPORTS_DIR = ROOT / "reports"
     REPORTS_DIR.mkdir(exist_ok=True)
 
-    print("🔍 Analizando SBOMs...")
+    print("Analizando SBOMs...")
     sboms = load_sboms(SBOMS_DIR)
 
     if not sboms:
-        print("⚠ No se encontraron SBOMs. Finalizando.")
+        print("No se encontraron SBOMs. Finalizando.")
         return
 
     result = analyze(sboms)
@@ -78,7 +78,7 @@ def main():
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
 
-    print(f"✔ Análisis completado. Reporte generado en: {output_file}")
+    print(f"Análisis completado. Reporte generado en: {output_file}")
 
 
 if __name__ == "__main__":
