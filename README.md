@@ -82,3 +82,15 @@ Toda documentación adicional se encuentra en `docs/`.
 ##  Licencia
 Libre uso para fines educativos.
 
+## Automatizacion
+Se creo el archivo `makefile` para automatizar la ejecucion siguiendo los siguientes comandos:
+```bash
+# Ejecuta build-all.sh
+make build
+
+# Genera SBOMs para las imagenes de nuestro servicios
+make sbom
+
+# Analisis SCA
+make scan
+```
