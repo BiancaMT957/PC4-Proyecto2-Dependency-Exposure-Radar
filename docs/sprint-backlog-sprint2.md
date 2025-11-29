@@ -183,7 +183,7 @@ Además dentro de la carpeta reports/
 ```
 
 # Issue 9 - Implementar analyze_sboms.py
-**ID:** 8 9
+**ID:** 9
 **Responsable:** Luis Calapuja
 **Rama de trabajo:** `feature/analyze-sboms/luis`
 
@@ -207,3 +207,30 @@ Luego de ejecutar el `generate-sboms.sh` procederemos a analizarlos con:
 ```bash
 python3 scripts/analyze-sboms.py
 ```
+# Issue 10 - Documentar visión, definition of done y risks
+**ID:** 10
+**Responsable:** Luis Calapuja
+**Rama de trabajo:** `feature/docs-core/luis`
+
+## Descripcion
+Crear y completar los archivos:
+- docs/vision.md
+- docs/definition-of-done.md
+- docs/risk-register.md
+
+## Criterios
+- Documentación sin artefactos externos
+- No incluir K8s, compose, etc.
+
+# Issue 11 - Registrar métricas Sprint 1 y Sprint 2
+**ID:** 11
+**Responsable:** Luis Calapuja
+**Rama de trabajo:** `feature/metrics/luis`
+
+## Descripción
+Completar docs/metrics.md con throughput, WIP, lead time y vulnerabilidades detectadas/mitigadas.
+
+## Criterios
+- Métricas coherentes, no wikis de otros proyectos
+- No incluir métricas de K8s, logs, DAST, etc.
+- Enfocado solo en builds, SBOMs y scans
