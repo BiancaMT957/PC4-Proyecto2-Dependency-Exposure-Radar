@@ -96,7 +96,7 @@ for carpeta in "$SERVICES"/*; do
     # Validar que el archivo JSON generado sea válido (si existe jq)
     if [ "$HAS_JQ" = "si" ]; then
       if jq empty "$archivo" >/dev/null 2>&1; then
-        echo "  -> JSON válido ✔"
+        echo "  -> JSON válido"
         total_sboms=$((total_sboms+1))
       else
         # Indicar error, pero continuar para no romper la experiencia
@@ -121,7 +121,5 @@ if [ "$total_servicios" -ne "$total_sboms" ]; then
   echo " No hay coincidencia"
   exit 1
 else
-  echo "✔ Todo OK"
+  echo "Todo OK"
 fi
-
-
