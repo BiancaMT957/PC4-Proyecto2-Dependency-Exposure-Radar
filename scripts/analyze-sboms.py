@@ -3,8 +3,8 @@ import json
 import os
 from pathlib import Path
 
+# Carga los JSON en sbom_dir
 def load_sboms(sbom_dir: Path):
-    """Carga todos los archivos JSON dentro de sbom_dir."""
     sboms = []
     for file in sbom_dir.glob("*.json"):
         try:
@@ -12,17 +12,11 @@ def load_sboms(sbom_dir: Path):
                 data = json.load(f)
                 sboms.append({"file": file.name, "data": data})
         except json.JSONDecodeError:
-            print(f"⚠ Error: {file} no es JSON válido. Se ignora.")
+            print(f"Error: {file} no es JSON válido. Se ignora.")
     return sboms
 
-
+# Extrae dependencias segun formato (SBOM real o simulado)
 def extract_dependencies(sbom_data):
-    """
-    Extrae dependencias o vulnerabilidades según el formato.
-    Como los SBOM pueden ser reales o simulados, se manejan ambos casos:
-      - SBOM simulado: 'vulnerabilities': [ {package...} ]
-      - SBOM con formato CycloneDX o Syft/Grype puede tener 'packages'
-    """
     deps = []
 
     # Caso SBOM simulado
@@ -30,7 +24,7 @@ def extract_dependencies(sbom_data):
         for v in sbom_data["vulnerabilities"]:
             deps.append(v.get("package", "unknown"))
 
-    # Caso SBOM real (CycloneDX / Syft)
+    # Caso SBOM real
     if "packages" in sbom_data:
         for p in sbom_data["packages"]:
             deps.append(p.get("name", "unknown"))
@@ -65,7 +59,7 @@ def main():
     REPORTS_DIR = ROOT / "reports"
     REPORTS_DIR.mkdir(exist_ok=True)
 
-    print("🔍 Analizando SBOMs...")
+    print("Analizando SBOMs...")
     sboms = load_sboms(SBOMS_DIR)
 
     if not sboms:

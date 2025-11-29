@@ -19,7 +19,7 @@ if command -v grype >/dev/null 2>&1; then
 
   # Intento de análisis real: si falla, pasamos a modo simulado para evitar romper el pipeline.
   if grype dir:"$ROOT" -o json > "$REPORT" 2>/dev/null; then
-    echo "✓ Análisis real completado."
+    echo "Análisis real completado."
   else
     echo " grype falló, generando análisis simulado..."
     USE_SIMULATED="yes"
@@ -31,13 +31,11 @@ else
 fi
 
 # Generación de análisis simulado si no fue posible usar grype.
-# El objetivo es siempre producir un reporte válido para los siguientes pasos del proyecto.
 if [ "$USE_SIMULATED" = "yes" ]; then
   REPORT="$REPORTS/scan-report.json"
   fecha=$(date +"%Y-%m-%dT%H:%M:%SZ")
 
   # Construcción de un JSON mínimo válido que represente vulnerabilidades ficticias.
-  # Esto permite probar reportes, dashboards y pipelines aun sin herramientas reales.
   cat > "$REPORT" <<EOF
 {
   "scan_type": "simulado",
@@ -49,11 +47,11 @@ if [ "$USE_SIMULATED" = "yes" ]; then
 }
 EOF
 
-  echo "✓ Análisis simulado generado."
+  echo "Análisis simulado generado."
 fi
 
 # Mensaje final mostrando dónde quedó el reporte.
 echo "Reporte generado en: $REPORT"
 
 # Terminamos con confirmación clara de éxito.
-echo "✔ Análisis completado sin errores."
+echo "Análisis completado sin errores."
